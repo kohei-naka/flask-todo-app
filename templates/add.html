@@ -1,0 +1,8 @@
+<h2>ToDo追加</h2>
+<form method="POST">
+  {{ form.csrf_token }}
+  {{ form.title.label }} {{ form.title() }}<br>
+  {{ form.due_date.label }} {{ form.due_date() }}<br>
+  {{ form.priority.label }} {{ form.priority() }}<br>
+  {{ form.submit() }}
+</form>

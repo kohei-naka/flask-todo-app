@@ -1,0 +1,27 @@
+<h2>新しいタスクを追加</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{ form.title.label }} {{ form.title() }}<br>
+  {{ form.due_date.label }} {{ form.due_date() }}<br>
+  {{ form.priority.label }} {{ form.priority() }}<br>
+  <input type="submit" value="追加">
+</form>
+
+<hr>
+
+<h2>タスクリスト</h2>
+<ul>
+{% for todo in todos %}
+  <li>
+    {{ todo.title }} {{ todo.due_date }} 
+    {% if todo.priority == 1 %}高
+    {% elif todo.priority == 2 %}中
+    {% else %}低
+    {% endif %}
+    <a href="{{ url_for('edit', todo_id=todo.id) }}">編集</a>
+    <form method="POST" action="{{ url_for('delete', todo_id=todo.id) }}" style="display:inline;">
+      <input type="submit" value="削除">
+    </form>
+  </li>
+{% endfor %}
+</ul>

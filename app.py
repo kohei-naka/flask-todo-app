@@ -28,6 +28,8 @@ class Todo(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = TodoForm()
+    
+    # POST処理（タスク追加）
     if form.validate_on_submit():
         new_todo = Todo(
             title=form.title.data,
@@ -36,9 +38,17 @@ def index():
         )
         db.session.add(new_todo)
         db.session.commit()
-        return redirect('/')
+        return redirect(url_for('index'))
 
-    todos = Todo.query.all()
+    # GET処理（表示＆ソート）
+    sort = request.args.get('sort', 'default')
+    if sort == 'due_date_asc':
+        todos = Todo.query.order_by(Todo.due_date.asc()).all()
+    elif sort == 'due_date_desc':
+        todos = Todo.query.order_by(Todo.due_date.desc()).all()
+    else:
+        todos = Todo.query.all()
+
     return render_template('index.html', form=form, todos=todos)
 
 @app.route('/add', methods=['GET', 'POST'])

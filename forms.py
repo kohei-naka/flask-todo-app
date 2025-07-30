@@ -6,8 +6,8 @@ class TodoForm(FlaskForm):
     title = StringField('タイトル', validators=[DataRequired()])
     due_date = DateField('期限', format='%Y-%m-%d', validators=[DataRequired()])
     priority = SelectField('優先度', choices=[
-        ('1', '低'),
-        ('2', '中'),
-        ('3', '高')
+        (3, '高'),
+        (2, '中'),
+        (1, '低')
     ], coerce=int, validators=[DataRequired()])
     submit = SubmitField('追加')
